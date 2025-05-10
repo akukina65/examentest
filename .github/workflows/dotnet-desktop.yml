@@ -36,54 +36,49 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Core Desktop
+        name: .NET Core Desktop
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+        on:
+          push:
+            branches: [ "master" ]
+          pull_request:
+            branches: [ "master" ]
 
-jobs:
+        jobs:
+          build:
+            strategy:
+              matrix:
+                configuration: [Debug, Release]
 
-  build:
+            runs-on: windows-latest
 
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
+            env:
+              Solution_Name: ConsoleApp4.sln
+              Test_Project_Path: ConsoleApp4\ConsoleApp4.csproj
+              # Wap_Project_Directory: your-wap-project-directory-name # УДАЛЕНО
+              # Wap_Project_Path: your-wap-project-path                  # УДАЛЕНО
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+            steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
-    env:
-      Solution_Name: ConsoleApp4.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: ConsoleApp4\ConsoleApp4\ConsoleApp4.csproj"                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-                       # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+            - name: Install .NET Core
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: 8.0.x
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+            - name: Setup MSBuild.exe
+              uses: microsoft/setup-msbuild@v2
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+            - name: Execute unit tests
+              run: dotnet test
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
+            - name: Restore the application
+              run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+              env:
+                Configuration: ${{ matrix.configuration }}
 
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
-
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
-
+    
    
