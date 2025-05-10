@@ -132,4 +132,8 @@ namespace ConsoleApp18
             Console.ReadKey();
         }
     }
+
+    //gbjhbgizsuhdfjux
+    //d;xfjivgbxp;fgojb'fg
+    //kjfnvx;lkfcbxfgbxfgblz'fi
 }
