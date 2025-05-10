@@ -130,6 +130,7 @@ namespace ConsoleApp18
             me.Prinmasiv(masiv);
             me.Metod(masiv);
             Console.ReadKey();
+            ///e54645675r7657867898790890
         }
     }
 }
