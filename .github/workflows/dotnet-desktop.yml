@@ -53,8 +53,8 @@
             runs-on: windows-latest
 
             env:
-              Solution_Name: ConsoleApp4.sln
-              Test_Project_Path: ConsoleApp4\ConsoleApp4.csproj
+              Solution_Name: ConsoleApp18.sln
+              Test_Project_Path: ConsoleApp18.csproj
               # Wap_Project_Directory: your-wap-project-directory-name # УДАЛЕНО
               # Wap_Project_Path: your-wap-project-path                  # УДАЛЕНО
 
