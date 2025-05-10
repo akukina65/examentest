@@ -130,7 +130,7 @@ namespace ConsoleApp18
             me.Prinmasiv(masiv);
             me.Metod(masiv);
             Console.ReadKey();
-            //1223
+            //ычеапиаритьвнлпд
         }
     }
 
